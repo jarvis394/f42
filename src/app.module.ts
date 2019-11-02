@@ -1,21 +1,28 @@
-import { Module } from '@nestjs/common'
+import { CacheModule, Module, CacheInterceptor } from '@nestjs/common'
+import { APP_INTERCEPTOR } from '@nestjs/core'
 import { MongooseModule } from '@nestjs/mongoose'
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
 import { LinksModule } from './links/links.module'
-import { MONGOOSE_DB_URL } from './config/keys'
-import { LinkSchema } from './links/schemas/link.schema'
+import { GoModule } from './go/go.module'
+import * as config from './config/keys'
 
 @Module({
   imports: [
-    LinksModule,
-    MongooseModule.forRoot(MONGOOSE_DB_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+    CacheModule.register({
+      ttl: 5,
+      max: 1000
     }),
-    MongooseModule.forFeature([{ name: 'Link', schema: LinkSchema }])
+    MongooseModule.forRoot(config.MONGO_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }),
+    LinksModule,
+    GoModule
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CacheInterceptor,
+    },
+  ],
 })
 export class AppModule {}

@@ -1,17 +1,14 @@
-import * as dotenv from 'dotenv'
-dotenv.config()
-
 import { NestFactory } from '@nestjs/core'
-import { AppModule } from './app.module'
 import { ValidationPipe } from '@nestjs/common'
-import { PORT } from './config/keys'
+import * as config from './config/keys'
+import { AppModule } from './app.module'
 
-async function bootstrap() {
+const bootstrap = async (): Promise<void> => {
   const app = await NestFactory.create(AppModule)
 
   // Nest app onfiguration
   app.useGlobalPipes(new ValidationPipe())
-
-  await app.listen(PORT)
+  
+  await app.listen(config.PORT)
 }
 bootstrap()

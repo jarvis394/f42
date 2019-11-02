@@ -1,6 +1,6 @@
-import { Document } from 'mongoose';
+import { Document } from 'mongoose'
 
-export interface Link {
+export interface Link extends Document {
   /**
    * Date when entry was created
    */
@@ -16,5 +16,3 @@ export interface Link {
    */
   url: string
 }
-
-export interface LinkModel extends Link, Document {}

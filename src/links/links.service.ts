@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common'
 import { Model } from 'mongoose'
 import { InjectModel } from '@nestjs/mongoose'
-import { LinkModel, Link } from './interfaces/link.interface'
+import { Link } from './interfaces/link.interface'
 import * as shortid from 'shortid'
 
 @Injectable()
 export class LinksService {
   constructor(
-    @InjectModel('Link') private readonly linkModel: Model<LinkModel>
+    @InjectModel('Link') private readonly linkModel: Model<Link>
   ) {}
 
   /**
