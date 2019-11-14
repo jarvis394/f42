@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, Body, Put, Delete } from '@nestjs/common'
+import { Controller, Get, Post, Param, Body, Delete } from '@nestjs/common'
 import { CreateLinkDto } from './dto/create-link.dto'
 import { LinksService } from './links.service'
 import { Link } from './interfaces/link.interface'
